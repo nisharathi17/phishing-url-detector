@@ -7,4 +7,6 @@ def extract_features(url):
         "starts_with_http": int(url.startswith("http")),
         "digits": sum(c.isdigit() for c in url)
     }
-print(extract_features("http://google123.com"))
+if __name__ == "__main__":
+    print(extract_features("http://google123.com"))
+
