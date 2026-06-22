@@ -1,7 +1,10 @@
-import pandas as pd
+def extract_features(url):
 
-df = pd.read_csv("data/urls.csv")
-
-print(df.head())
-print(df.shape)
-print(df["label"].value_counts())
+    return {
+        "url_length": len(url),
+        "url_count_dots": url.count("."),
+        "url_count_hyphens": url.count("-"),
+        "starts_with_http": int(url.startswith("http")),
+        "digits": sum(c.isdigit() for c in url)
+    }
+print(extract_features("http://google123.com"))
