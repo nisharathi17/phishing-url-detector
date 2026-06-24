@@ -32,3 +32,6 @@ for feature, importance in zip(
     model.feature_importances_
 ):
     print(f"{feature}: {importance:.4f}")
+    print(df.groupby("label")["url"].apply(
+    lambda x: sum(u.startswith("http") for u in x)
+))
