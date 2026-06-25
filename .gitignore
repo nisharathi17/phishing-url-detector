@@ -1,0 +1,22 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.env
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Model files
+models/*.pkl
+
+# MacOS files
+.DS_Store
+
+# VS Code settings
+.vscode/
+
+# Large datasets
+data/*.csv
