@@ -35,3 +35,12 @@ for feature, importance in zip(
     print(df.groupby("label")["url"].apply(
     lambda x: sum(u.startswith("http") for u in x)
 ))
+import joblib
+from pathlib import Path
+
+MODEL_PATH = Path(__file__).resolve().parent.parent / "models" / "random_forest.pkl"
+
+joblib.dump(model, MODEL_PATH)
+
+print(f"\nModel saved successfully to: {MODEL_PATH}")
+print(f"File size: {MODEL_PATH.stat().st_size} bytes")
