@@ -146,3 +146,21 @@ Future versions should validate this feature on independent datasets.
 
 Note:
 This feature may partially reflect dataset formatting rather than intrinsic URL characteristics. It should be re-evaluated when using other datasets.
+
+## Setup
+
+1. Clone the repository
+2. Create and activate a virtual environment
+3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Train the model
+
+```bash
+python src/train.py
+```
+
+This creates `models/random_forest.pkl`, which is not tracked by Git.
