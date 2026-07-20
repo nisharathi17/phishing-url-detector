@@ -1,5 +1,5 @@
 from urllib import request
-
+from fastapi import HTTPException
 from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
@@ -26,10 +26,21 @@ def home():
         "message": "Welcome to the URL Classifier API!"
     }
 
+class PredictionResponse(BaseModel):
+    url: str
+    prediction: str
+    confidence: float
+    confidence_level: str
+
+@app.post("/predict", response_model=PredictionResponse)
 
 @app.post("/predict")
 def predict(request: URLRequest):
-
+    if not request.url.strip():
+         raise HTTPException(
+        status_code=400,
+        detail="URL cannot be empty."
+    )
     features = extract_features(request.url)
 
     X = pd.DataFrame([features])
