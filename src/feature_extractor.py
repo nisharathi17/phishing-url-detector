@@ -1,6 +1,20 @@
 import re
 from urllib.parse import urlparse
+import math
+from collections import Counter
 
+def calculate_entropy(text):
+   
+    if not text:
+        return 0
+    counts = Counter(text)
+    length = len(text)
+    entropy = 0
+    for count in counts.values():
+        probability = count / length
+        entropy -= probability * math.log2(probability)
+
+    return entropy
 
 def extract_features(url):
     suspicious_words = [
@@ -13,12 +27,15 @@ def extract_features(url):
         "signin"
     ]
 
+    
+
+
     # Parse URL
     parsed = urlparse(url)
 
     # Extract domain (works whether protocol exists or not)
     domain = parsed.netloc if parsed.netloc else parsed.path.split("/")[0]
-
+    domain_entropy = calculate_entropy(domain)
     # Basic counts
     url_length = len(url)
     dot_count = url.count(".")
@@ -44,7 +61,7 @@ def extract_features(url):
     )
 
     # Domain features
-    num_subdomains = max(0, domain.count(".") - 1)
+    
 
     has_protocol = int(
         url.startswith("http://") or
@@ -64,6 +81,10 @@ def extract_features(url):
             )
         )
     )
+    if has_ip_address:
+         num_subdomains = 0
+    else:
+         num_subdomains = max(0, domain.count(".") - 1)
 
     # Token-based feature
     tokens = re.split(r"[./?=&_-]", url)
@@ -90,6 +111,7 @@ def extract_features(url):
         "suspicious_word_count": suspicious_word_count,
         "num_subdomains": num_subdomains,
         "has_ip_address": has_ip_address,
+       "domain_entropy": domain_entropy,
         "longest_token_length": longest_token_length
     }
 
